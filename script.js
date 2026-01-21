@@ -73,7 +73,7 @@ songs.forEach((song, i) => {
   playlist.appendChild(div);
 });
 
-function loadSong(index) {
+function loadSong(index, autoPlay = true) {
   current = index;
   const song = songs[index];
 
@@ -85,14 +85,20 @@ function loadSong(index) {
   coverEl.src = song.cover;
   audio.src = song.src;
 
-  audio.play();
-  isPlaying = true;
-  playBtn.textContent = "⏸";
-  player.classList.add("playing");
+  if (autoPlay) {
+    audio.play();
+    isPlaying = true;
+    playBtn.textContent = "⏸";
+    player.classList.add("playing");
+  } else {
+    isPlaying = false;
+    playBtn.textContent = "▶";
+    player.classList.remove("playing");
+  }
 }
-// Load the first song initially but keep it paused
+
 window.addEventListener("DOMContentLoaded", () => {
-  loadSong(0, false); // load first song, do NOT auto-play
+  loadSong(0, false);
 });
 
 
